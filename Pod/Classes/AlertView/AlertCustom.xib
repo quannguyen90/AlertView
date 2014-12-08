@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AlertCustom">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZxQ-xF-MAW">
+                    <rect key="frame" x="10" y="209" width="300" height="150"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Coz-1z-jWk">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="280" placeholderIntrinsicHeight="46" text="Title \n Message" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mno-t8-k8i">
+                            <rect key="frame" x="10" y="10" width="280" height="46"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="280" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uPa-4P-qTz">
+                            <rect key="frame" x="10" y="66" width="280" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="bZq-U3-gld"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="numberPad"/>
+                            <connections>
+                                <action selector="exitKeyboard:" destination="iN0-l3-epB" eventType="editingDidEndOnExit" id="iK2-nZ-WoI"/>
+                            </connections>
+                        </textField>
+                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="44" translatesAutoresizingMaskIntoConstraints="NO" id="f5M-To-loP" userLabel="View button">
+                            <rect key="frame" x="0.0" y="106" width="300" height="44"/>
+                            <color key="backgroundColor" red="0.97647058819999999" green="0.61568627450000002" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="43t-XH-eAd"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Coz-1z-jWk" secondAttribute="trailing" id="B5X-QG-pg6"/>
+                        <constraint firstAttribute="bottom" secondItem="f5M-To-loP" secondAttribute="bottom" id="EY6-Hg-33p"/>
+                        <constraint firstItem="f5M-To-loP" firstAttribute="leading" secondItem="ZxQ-xF-MAW" secondAttribute="leading" id="J5V-JO-hW5"/>
+                        <constraint firstItem="f5M-To-loP" firstAttribute="top" secondItem="uPa-4P-qTz" secondAttribute="bottom" constant="10" id="JF8-Qi-D0G"/>
+                        <constraint firstAttribute="height" constant="150" id="Llh-IA-euj"/>
+                        <constraint firstItem="mno-t8-k8i" firstAttribute="leading" secondItem="ZxQ-xF-MAW" secondAttribute="leading" constant="10" id="PKi-Nh-FrF"/>
+                        <constraint firstAttribute="trailing" secondItem="uPa-4P-qTz" secondAttribute="trailing" constant="10" id="PMA-tU-OT7"/>
+                        <constraint firstItem="uPa-4P-qTz" firstAttribute="leading" secondItem="ZxQ-xF-MAW" secondAttribute="leading" constant="10" id="PU7-nQ-xuG"/>
+                        <constraint firstItem="uPa-4P-qTz" firstAttribute="top" secondItem="mno-t8-k8i" secondAttribute="bottom" constant="10" id="Wfn-ju-h0C"/>
+                        <constraint firstAttribute="trailing" secondItem="mno-t8-k8i" secondAttribute="trailing" constant="10" id="X65-Zw-jaf"/>
+                        <constraint firstAttribute="trailing" secondItem="f5M-To-loP" secondAttribute="trailing" id="cNB-PY-Ies"/>
+                        <constraint firstItem="Coz-1z-jWk" firstAttribute="top" secondItem="ZxQ-xF-MAW" secondAttribute="top" id="fQb-dU-B2l"/>
+                        <constraint firstAttribute="width" constant="300" id="ktk-ea-UiO"/>
+                        <constraint firstAttribute="bottom" secondItem="Coz-1z-jWk" secondAttribute="bottom" id="p6c-qk-PIV"/>
+                        <constraint firstItem="mno-t8-k8i" firstAttribute="top" secondItem="ZxQ-xF-MAW" secondAttribute="top" constant="10" id="qqi-D2-gCz"/>
+                        <constraint firstItem="Coz-1z-jWk" firstAttribute="leading" secondItem="ZxQ-xF-MAW" secondAttribute="leading" id="rsR-cw-ZaA"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="ZxQ-xF-MAW" secondAttribute="centerX" id="KJ7-sd-nhe"/>
+                <constraint firstAttribute="centerY" secondItem="ZxQ-xF-MAW" secondAttribute="centerY" id="LNI-oE-Nqb"/>
+            </constraints>
+            <connections>
+                <outlet property="contentView" destination="ZxQ-xF-MAW" id="iVE-hb-fGB"/>
+                <outlet property="heightContentView" destination="Llh-IA-euj" id="dOY-vc-ksQ"/>
+                <outlet property="heightTextField" destination="bZq-U3-gld" id="2NG-pp-Sac"/>
+                <outlet property="heightViewButton" destination="43t-XH-eAd" id="PzF-2H-ach"/>
+                <outlet property="imageBackground" destination="Coz-1z-jWk" id="tzz-NE-Uno"/>
+                <outlet property="messageAlert" destination="mno-t8-k8i" id="X4L-OG-irx"/>
+                <outlet property="originText" destination="Wfn-ju-h0C" id="jH9-by-OFd"/>
+                <outlet property="textFeild" destination="uPa-4P-qTz" id="RfM-Bf-Pih"/>
+                <outlet property="viewButton" destination="f5M-To-loP" id="ORA-he-8qo"/>
+            </connections>
+            <point key="canvasLocation" x="354" y="279"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

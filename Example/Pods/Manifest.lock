@@ -1,0 +1,17 @@
+PODS:
+  - AlertView (0.1.0)
+  - FBSnapshotTestCase (1.4)
+
+DEPENDENCIES:
+  - AlertView (from `../`)
+  - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  AlertView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  AlertView: 3aa16524d53c32bdcd30be60a6c34e27bc9d2514
+  FBSnapshotTestCase: f9f225b5ba11c8d8c09075590490df16314e4d62
+
+COCOAPODS: 0.35.0

@@ -10,7 +10,13 @@
 Pod::Spec.new do |s|
   s.name             = "AlertView"
   s.version          = "0.1.0"
-  s.summary          = "Custom UIAlertView"
+  s.summary          = "A short description of AlertView."
+  s.description      = <<-DESC
+                       An optional longer description of AlertView
+
+                       * Markdown format.
+                       * Don't worry about the indent, we strip it!
+                       DESC
   s.homepage         = "https://github.com/<GITHUB_USERNAME>/AlertView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
@@ -21,7 +27,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/AlertView/*.{h,m}'
+  s.source_files = 'Pod/Classes'
   s.resource_bundles = {
     'AlertView' => ['Pod/Assets/*.png']
   }
