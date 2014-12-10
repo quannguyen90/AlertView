@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.name             = "AlertView"
   s.version          = "0.1.0"
   s.summary          = "Custom UIAlertView"
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/AlertView"
+  s.homepage         = "https://github.com/quannguyen90/AlertView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Quan Nguyen Van" => "quannv.tm@gmail.com" }
