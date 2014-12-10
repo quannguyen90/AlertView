@@ -7,8 +7,7 @@
 //
 
 #import "AlertCustom.h"
-#import "AppDelegate.h"
-#import "UIImage+PACBlurryEffect.h"
+#import "UIImage+Blur.h"
 
 @interface AlertCustom ()
 
@@ -26,7 +25,7 @@
     if (self) {
         heightViewButton.constant = 0.0;
         UIButton * btnCancel = [[UIButton alloc] initWithFrame:frame];
-        [btnCancel addTarget:self action:@selector(dismissView) forControlEvents:UIControlEventTouchUpInside];
+        [btnCancel addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btnCancel];
         [self setBackgroundColor:[UIColor redColor]];
     }
@@ -36,14 +35,14 @@
 
 - (instancetype) initWithTitle:(NSString *) title andDescription:(NSString *)description{
 
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AlertCustom" owner:self options:nil];
-
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"AlertCustom" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    NSArray *nib = [bundle loadNibNamed:@"AlertCustom" owner:self options:nil];
+    
     self = [nib objectAtIndex:0];
     if (self) {
         heightViewButton.constant = 0.0;
-        NSMutableAttributedString * attributed = [[NSMutableAttributedString alloc] initWithString:title attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
-        [attributed appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", description] attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont systemFontOfSize:15], NSFontAttributeName, nil]]];
-        [messageAlert setAttributedText:attributed];
+        [messageAlert setAttributedText:[self attributedStringWithTitle:title andMessage:description]];
     }
     return self;
 }
@@ -58,24 +57,23 @@
                  orButtonIndex:(SelectButton) button{
     
    
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AlertCustom" owner:self options:nil];
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"AlertView" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    NSArray *nib = [bundle loadNibNamed:@"AlertCustom" owner:self options:nil];
     
     self = [nib objectAtIndex:0];
     if (self) {
         _cancelBlock = [cancel copy];
         _selectBlock = [button copy];
-        heightViewButton.constant = 0.0;
-        NSMutableAttributedString * attributed = [[NSMutableAttributedString alloc] initWithString:title attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
         
-        [attributed appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", message] attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont systemFontOfSize:15], NSFontAttributeName, nil]]];
-
-        [messageAlert setAttributedText:attributed];
+        heightViewButton.constant = 0.0;
+        [messageAlert setAttributedText:[self attributedStringWithTitle:title andMessage:message]];
         [messageAlert setTextAlignment:NSTextAlignmentCenter];
-        [self updateConstraintsIfNeeded];
-
-        [self addButtonCancelWithTitle:cancelButtonTitle andOtherButtons:otherButtonTitles];
+        
         heightTextField.constant = 0;
         originText.constant = 0;
+        
+        [self addButtonCancelWithTitle:cancelButtonTitle andOtherButtons:otherButtonTitles];
         contentView.layer.cornerRadius = 10.0;
         contentView.layer.borderWidth = 1.5f;
         contentView.layer.borderColor = [UIColor clearColor].CGColor;
@@ -93,18 +91,16 @@
                  orButtonIndex:(SelectButtonAndTextFeild) button{
     
     
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AlertCustom" owner:self options:nil];
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"AlertCustom" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    NSArray *nib = [bundle loadNibNamed:@"AlertCustom" owner:self options:nil];
     
     self = [nib objectAtIndex:0];
     if (self) {
         _cancelBlock = [cancel copy];
         _selectContainTextFeildBlock = [button copy];
         heightViewButton.constant = 0.0;
-        NSMutableAttributedString * attributed = [[NSMutableAttributedString alloc] initWithString:title attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
-        
-        [attributed appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", message] attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont systemFontOfSize:15], NSFontAttributeName, nil]]];
-        
-        [messageAlert setAttributedText:attributed];
+        [messageAlert setAttributedText:[self attributedStringWithTitle:title andMessage:message]];
         [messageAlert setTextAlignment:NSTextAlignmentCenter];
         [self updateConstraintsIfNeeded];
         
@@ -122,6 +118,24 @@
 }
 
 
+- (NSMutableAttributedString *) attributedStringWithTitle:(NSString *) title andMessage:(NSString *) message{
+    
+    NSMutableParagraphStyle *paragraphStyle1 = NSMutableParagraphStyle.new;
+    paragraphStyle1.paragraphSpacing                = 10;
+
+    NSMutableAttributedString * attributedResults = [[NSMutableAttributedString alloc] initWithString:title attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont boldSystemFontOfSize:17], NSFontAttributeName, paragraphStyle1,NSParagraphStyleAttributeName, nil]];
+    
+    NSMutableParagraphStyle *paragraphStyle2 = NSMutableParagraphStyle.new;
+    paragraphStyle2.paragraphSpacing                = 5;
+    
+    NSAttributedString * attributed = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", message] attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont systemFontOfSize:14], NSFontAttributeName, paragraphStyle2,NSParagraphStyleAttributeName, nil]];
+
+    
+    [attributedResults appendAttributedString:attributed];
+
+    return attributedResults;
+}
+
 - (instancetype) initWithTitle:(NSString *) title
                        message:(NSString *)message
                     viewCustom:(UIView *) customView
@@ -129,7 +143,10 @@
              otherButtonTitles:(NSArray *) otherButtonTitles
              dismissWihtCancel:(CancelBlock) cancel
                  orButtonIndex:(SelectButton) button{
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AlertCustom" owner:self options:nil];
+    
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"AlertCustom" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:path];
+    NSArray *nib = [bundle loadNibNamed:@"AlertCustom" owner:self options:nil];
     
     self = [nib objectAtIndex:0];
     if (self) {
@@ -137,12 +154,7 @@
         heightViewButton.constant = 0.0;
         _cancelBlock = [cancel copy];
         _selectBlock = [button copy];
-        
-        NSMutableAttributedString * attributed = [[NSMutableAttributedString alloc] initWithString:title attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont boldSystemFontOfSize:17], NSFontAttributeName, nil]];
-        
-        [attributed appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", message] attributes:[NSDictionary dictionaryWithObjectsAndKeys: [UIFont systemFontOfSize:15], NSFontAttributeName, nil]]];
-        
-        [messageAlert setAttributedText:attributed];
+        [messageAlert setAttributedText:[self attributedStringWithTitle:title andMessage:message]];
         [messageAlert setTextAlignment:NSTextAlignmentCenter];
         [self updateConstraintsIfNeeded];
         [self addCustomView:customView];
@@ -180,99 +192,110 @@
     
 }
 
+- (void) addButtonCancelWithTitle:(NSString *) cancelTitle andButtonWithTitle:(NSString *) title{
+    
+    //**************************************************************
+    //**************************** button **********************************
+    UIButton * buttonCancel = [[UIButton alloc] initWithFrame:CGRectMake(0.0 ,1.0, CGRectGetWidth(viewButton.frame)/2-0.5, 44)];
+    buttonCancel.tag = 0;
+    [buttonCancel addTarget:self action:@selector(buttonTouchUp:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonCancel setTitleColor:[UIColor colorWithRed:249.0/255 green:157.0/255 blue:50.0/255 alpha:1.0] forState:UIControlStateNormal];
+    [buttonCancel.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [buttonCancel setTitle:cancelTitle forState:UIControlStateNormal];
+    buttonCancel.backgroundColor = [UIColor whiteColor];
+    [viewButton addSubview:buttonCancel];
+    
+    //**************************************************************
+    //**************************** button **********************************
+    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(viewButton.frame)/2 + 0.5,1.0, CGRectGetWidth(viewButton.frame)/2-0.5, 44)];
+    button.tag = 0;
+    [button addTarget:self action:@selector(buttonTouchUp:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor colorWithRed:249.0/255 green:157.0/255 blue:50.0/255 alpha:1.0] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [button setTitle:title forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor whiteColor];
+    [viewButton addSubview:button];
+    heightViewButton.constant = heightViewButton.constant + 45;
+
+}
+
+
 - (void) addButtonCancelWithTitle:(NSString *) title andOtherButtons:(NSArray *)titles{
     
-    
-    UIButton * buttonCancel = [[UIButton alloc] initWithFrame:CGRectMake(0.0, heightViewButton.constant, CGRectGetWidth(viewButton.frame), 44)];
-    [buttonCancel addTarget:self action:@selector(cancel:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonCancel setTitleColor:[UIColor colorWithRed:249.0/255 green:157.0/255 blue:50.0/255 alpha:1.0] forState:UIControlStateNormal];
-    [buttonCancel.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
-    buttonCancel.layer.borderColor = [UIColor colorWithWhite:0.2 alpha:0.8].CGColor;
-    buttonCancel.layer.borderWidth = 0.5;
-    [buttonCancel setTitle:title forState:UIControlStateNormal];
-    [viewButton addSubview:buttonCancel];
-
     if (titles == nil) {
-        heightViewButton.constant = 44;
-        heightContentView.constant = CGRectGetMinY(viewButton.frame) + heightViewButton.constant;
-        [viewButton setBackgroundColor:[UIColor clearColor]];
-        [self updateConstraintsIfNeeded];
+        [self addButtonWithTitle:title index:0.0 andSelector:@selector(cancel:)];
         return;
     }
     
     if (titles.count == 1) {
-        
-        [buttonCancel setFrame:CGRectMake(0.0, heightViewButton.constant, CGRectGetWidth(viewButton.frame)/2, 44)];
-        
-        UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(viewButton.frame) /2, heightViewButton.constant, CGRectGetWidth(viewButton.frame) /2, 44)];
-        [button addTarget:self action:@selector(buttonTouchUp:) forControlEvents:UIControlEventTouchUpInside];
-        button.tag = 1;
-        [button setTitle:[titles firstObject] forState:UIControlStateNormal];
-        [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
-        button.layer.borderColor = [UIColor colorWithWhite:0.2 alpha:0.8].CGColor;
-        [button setTitleColor:[UIColor colorWithRed:249.0/255 green:157.0/255 blue:50.0/255 alpha:1.0] forState:UIControlStateNormal];
-        button.layer.borderWidth = 0.5;
-        
-        UIImageView * imageSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(0, heightViewButton.constant , CGRectGetWidth(viewButton.frame), 0.5)];
-        [imageSeparator setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:0.8]];
-        [viewButton addSubview:imageSeparator];
-
-        UIImageView * imageSeparator1 = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(viewButton.frame) /2, heightViewButton.constant , 0.5, 44)];
-        [imageSeparator1 setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:0.8]];
-        [viewButton addSubview:imageSeparator1];
-        [viewButton addSubview:button];
-        
-        heightViewButton.constant = heightViewButton.constant + 44;
-        heightContentView.constant = CGRectGetMinY(viewButton.frame) + heightViewButton.constant;
-        
-        
+        [self addButtonCancelWithTitle:title andButtonWithTitle:[titles firstObject]];
     }else if (titles.count > 1){
-    
+        heightViewButton.constant = 0.0;
         for (NSString * titleButton in titles) {
-            
-            UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0,heightViewButton.constant, CGRectGetWidth(viewButton.frame), 44)];
-            button.tag = [titles indexOfObject:titleButton] + 1;
-            [button addTarget:self action:@selector(buttonTouchUp:) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor colorWithRed:249.0/255 green:157.0/255 blue:50.0/255 alpha:1.0] forState:UIControlStateNormal];
-            [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
-            [button setTitle:titleButton forState:UIControlStateNormal];
-
-            UIImageView * imageSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(0, [titles indexOfObject:titleButton] * 44 - 0.5, CGRectGetWidth(viewButton.frame), 0.5)];
-            [imageSeparator setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:0.8]];
-            [viewButton addSubview:imageSeparator];
-            heightViewButton.constant = heightViewButton.constant + 44;
-            [viewButton addSubview:button];
-
+            [self addButtonWithTitle:titleButton index:[titles indexOfObject:titleButton] andSelector:@selector(buttonTouchUp:)];
         }
-        
-        UIImageView * imageSeparator = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44 * titles.count , CGRectGetWidth(viewButton.frame), 0.5)];
-        [imageSeparator setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:0.8]];
-        [viewButton addSubview:imageSeparator];
-        
-        [buttonCancel setFrame:CGRectMake(0.0, heightViewButton.constant, CGRectGetWidth(viewButton.frame), 44)];
-        heightViewButton.constant = heightViewButton.constant + 44;
-
-        heightContentView.constant = CGRectGetMinY(viewButton.frame) + heightViewButton.constant;
+        [self addButtonWithTitle:title index:titles.count andSelector:@selector(cancel:)];
     }
-    [viewButton setBackgroundColor:[UIColor clearColor]];
+    
+    heightContentView.constant = heightViewButton.constant + CGRectGetMinY(viewButton.frame);
     [self updateConstraintsIfNeeded];
     
 }
 
+- (void) addButtonWithTitle:(NSString *) title index:(NSInteger )index andSelector:(SEL) selector{
+    
+    UIButton * button = [[UIButton alloc] initWithFrame:CGRectMake(0,44 * index + 1 * (index + 1), CGRectGetWidth(viewButton.frame), 44)];
+    button.tag = index + 1;
+    [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    [button setTitleColor:[UIColor colorWithRed:249.0/255 green:157.0/255 blue:50.0/255 alpha:1.0] forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor whiteColor];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [button setTitle:title forState:UIControlStateNormal];
+    [viewButton addSubview:button];
+    
+    //**************************** Add contraint for button **********************************
+    NSLayoutConstraint * contraintTop = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:viewButton attribute:NSLayoutAttributeTop multiplier:1.0 constant:44 * index + 1 * (index + 1)];
+    
+    NSLayoutConstraint * contraintLeft = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:viewButton attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint * contraintRight = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:viewButton attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint * contraintHeight = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0 constant:44.0];
+    
+    [button addConstraint:contraintHeight];
+    heightViewButton.constant = heightViewButton.constant + 44 + 1;
+    [viewButton addConstraints:@[contraintTop, contraintLeft, contraintRight]];
+    
+}
+
+- (void) addContraintToView:(UIView *) view{
+
+    NSLayoutConstraint * contraintTop = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint * contraintLeft = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint * contraintRight = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint * contraintBottom = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+    
+    [view addConstraints:@[contraintTop, contraintLeft, contraintRight, contraintBottom]];
+    [view updateConstraintsIfNeeded];
+}
+
 - (void) show{
 
-    AppDelegate * delegate  = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (_isShowTextFeild) {
-        [self setCenter:CGPointMake(delegate.window.center.x, delegate.window.center.y - 100)];
-
-    }else{
-        [self setCenter:CGPointMake(delegate.window.center.x, delegate.window.center.y)];
-    }
+    UIWindow *keyWindow = [[[UIApplication sharedApplication] delegate] window];
+    CGRect rect = [self frame];
+    rect.size = keyWindow.bounds.size;
+    [self setFrame:rect];
     
+    NSLog(@"view: %@", keyWindow);
     [contentView setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.01]];
     [self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.5]];
     contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
-    [delegate.window addSubview:self];
+    [keyWindow addSubview:self];
+    [self addContraintToView:keyWindow];
+    
     [UIView animateWithDuration:0.1 animations:^{
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.25 animations:^{
@@ -284,9 +307,7 @@
                 contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
             } completion:^(BOOL finished) {
             }];
-
         }];
-
     }];
     
 }
@@ -313,23 +334,21 @@
     UIImage *cropped = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
     return cropped;
-    
 }
 
 - (UIImage *)screenshot
 {
     CGFloat scale = [[UIScreen mainScreen] scale];
     UIImage *screenshot;
-    AppDelegate * delegate  = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIWindow *keyWindow = [[[UIApplication sharedApplication] delegate] window];
 
-    UIGraphicsBeginImageContextWithOptions(delegate.window.frame.size, NO, scale);
+    UIGraphicsBeginImageContextWithOptions(keyWindow.frame.size, NO, scale);
     {
         {
-            [delegate.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+            [keyWindow.layer renderInContext:UIGraphicsGetCurrentContext()];
             screenshot = UIGraphicsGetImageFromCurrentImageContext();
         }
     }
-    
     UIGraphicsEndImageContext();
     NSLog(@"image Size: %@", NSStringFromCGSize(screenshot.size));
     return screenshot;
@@ -345,9 +364,7 @@
         } completion:^(BOOL finished) {
             dismissSuccess(YES);
             [self removeFromSuperview];
-
         }];
-        
     }];
 
 }
@@ -370,7 +387,6 @@
     [self dismissView:^(BOOL isSuccess) {
         _cancelBlock (button.titleLabel.text);
     }];
-    
 }
 
 - (void)dealloc {
