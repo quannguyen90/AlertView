@@ -1,8 +1,6 @@
-APPLY_RULES_IN_COPY_FILES = YES
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AlertView" "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase"
 OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AlertView" -isystem "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase"
 OTHER_LDFLAGS = -ObjC -l"Pods-AlertView-AlertView"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods
-STRINGS_FILE_OUTPUT_ENCODING = binary

@@ -1,4 +1,3 @@
-APPLY_RULES_IN_COPY_FILES = YES
 FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks" "$(PLATFORM_DIR)/Developer/Library/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AlertView" "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase"
@@ -6,4 +5,3 @@ OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${P
 OTHER_LDFLAGS = -ObjC -l"Pods-Tests-AlertView" -l"Pods-Tests-FBSnapshotTestCase" -framework "XCTest"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods
-STRINGS_FILE_OUTPUT_ENCODING = binary

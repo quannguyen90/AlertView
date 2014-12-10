@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Quan Nguyen Van" => "quannv.tm@gmail.com" }
   s.source           = { :git => "https://github.com/quannguyen90/AlertView.git", :tag => s.version.to_s }
+
   # s.social_media_url = 'https://twitter.com/quannguyen90'
 
   s.platform     = :ios, '6.0'
@@ -26,8 +27,6 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
         'AlertView' => ['Pod/Assets/*.png','Pod/Classes/AlertView/*.{xib}']
   }
-
-  s.xcconfig = { "APPLY_RULES_IN_COPY_FILES" => "YES", "STRINGS_FILE_OUTPUT_ENCODING" => "binary" }
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
