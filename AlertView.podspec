@@ -8,6 +8,7 @@
 #
 
 Pod::Spec.new do |s|
+
   s.name             = "AlertView"
   s.version          = "0.1.0"
   s.summary          = "Custom UIAlertView"
@@ -29,4 +30,7 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+
+
+
 end
