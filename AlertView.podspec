@@ -8,12 +8,12 @@
 #
 
 Pod::Spec.new do |s|
-
   s.name             = "AlertView"
   s.version          = "0.1.0"
   s.summary          = "Custom UIAlertView"
   s.homepage         = "https://github.com/quannguyen90/AlertView"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+
   s.license          = 'MIT'
   s.author           = { "Quan Nguyen Van" => "quannv.tm@gmail.com" }
   s.source           = { :git => "https://github.com/quannguyen90/AlertView.git", :tag => s.version.to_s }
@@ -26,11 +26,10 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
         'AlertView' => ['Pod/Assets/*.png','Pod/Classes/AlertView/*.{xib}']
   }
+
   s.xcconfig = { "APPLY_RULES_IN_COPY_FILES" => "YES", "STRINGS_FILE_OUTPUT_ENCODING" => "binary" }
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-
-
 
 end
